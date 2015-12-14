@@ -1,5 +1,7 @@
 #include "reply.h"
 
+using namespace Redis;
+
 Reply::Reply(Reply::Types type) : m_type(type)
 {
     ;

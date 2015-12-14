@@ -7,6 +7,8 @@
 
 #include "command.h"
 
+using namespace Redis;
+
 class RedisClient : public QObject
 {
     Q_OBJECT
@@ -32,6 +34,7 @@ private slots:
 signals:
     void connected();
     void disconnected();
+    void messageReceived(QString channel, QVariant payload);
 };
 
 #endif // REDISCLIENT_H

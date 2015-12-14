@@ -1,5 +1,7 @@
 #include "command.h"
 
+using namespace Redis;
+
 Command::Command(QObject *parent) : QObject(parent)
 {
     ;

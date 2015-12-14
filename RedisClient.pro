@@ -11,13 +11,15 @@ TARGET      = redisclient
 TEMPLATE    = lib
 CONFIG     += staticlib
 
-SOURCES    += redisclient.cpp \
+SOURCES    += \
     command.cpp \
-    reply.cpp
+    reply.cpp \
+    redisclient.cpp
 
-HEADERS    += redisclient.h \
+HEADERS    += \
     command.h \
-    reply.h
+    reply.h \
+    redisclient.h
 
 unix {
     target.path = /usr/lib
