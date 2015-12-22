@@ -8,20 +8,21 @@ namespace Redis {
     {
     public:
         enum Types {
-            SimpleStrings,
-            Errors,
-            Integers,
-            BulkStrings,
-            Arrays
+            SimpleString,
+            Error,
+            Integer,
+            BulkString,
+            Array
         };
 
-        Reply(Types type);
+        Reply(Types type, QVariant value);
 
         Reply::Types type();
         QVariant value();
 
     private:
         Reply::Types m_type;
+        QVariant m_value;
     };
 }
 

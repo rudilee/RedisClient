@@ -23,9 +23,10 @@ public:
 private:
     QTcpSocket connection;
     QQueue<Command *> sentCommands;
+    bool subscribing;
 
     void initConnectionHandler();
-    void sendRequest(QByteArray request);
+    void sendRequest(QVariantList lines);
 
 private slots:
     void handleConnectionError(QAbstractSocket::SocketError socketError);

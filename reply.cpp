@@ -2,7 +2,9 @@
 
 using namespace Redis;
 
-Reply::Reply(Reply::Types type) : m_type(type)
+Reply::Reply(Reply::Types type, QVariant value) :
+    m_type(type),
+    m_value(value)
 {
     ;
 }
@@ -14,5 +16,5 @@ Reply::Types Reply::type()
 
 QVariant Reply::value()
 {
-    return QVariant();
+    return m_value;
 }

@@ -11,13 +11,22 @@ namespace Redis {
         Q_OBJECT
 
     public:
-        explicit Command(QObject *parent = 0);
+        explicit Command(QString commandName, QObject *parent = 0);
 
-        QByteArray bulkStrings();
+        void addArgument(QVariant argument);
+        void addArgumentStrings(QStringList arguments);
+
+        QString getCommandName();
+        QVariantList getArguments();
+
+        // Hashes commands
+        static Command *HGET(QString key, QString field);
 
         // Keys commands
+        static Command *GET(QString key);
         static Command *DEL(QStringList keys);
         static Command *EXPIRE(QString key, int seconds);
+        static Command *KEYS(QString pattern);
 
         // Lists commands
         static Command *LPUSH(QString key, QStringList values);
@@ -25,6 +34,10 @@ namespace Redis {
 
         // Pub/Sub commands
         static Command *SUBSCRIBE(QStringList channels);
+
+    private:
+        QString commandName;
+        QVariantList arguments;
 
     signals:
         void replyReceived(Reply reply);
