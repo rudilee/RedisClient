@@ -30,6 +30,7 @@ private:
 
 private slots:
     void handleConnectionError(QAbstractSocket::SocketError socketError);
+    void clearState();
     void parseReply();
 
 signals:
