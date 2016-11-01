@@ -25,40 +25,30 @@ void RedisClient::sendCommand(Command *command)
     sendRequest(command->getArguments());
 }
 
-void RedisClient::pipelining(QList<Command *> commands)
-{
-    QVariantList request;
-
-    foreach (Command *command, commands) {
-        sentCommands.enqueue(command);
-
-        request.append(command->getArguments());
-    }
-
-    sendRequest(request);
-}
-
 void RedisClient::initConnectionHandler()
 {
     connect(&connection, SIGNAL(connected()), SIGNAL(connected()));
     connect(&connection, SIGNAL(disconnected()), SIGNAL(disconnected()));
     connect(&connection, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(handleConnectionError(QAbstractSocket::SocketError)));
-    connect(&connection, SIGNAL(readyRead()), SLOT(parseReply()));
 }
 
 void RedisClient::sendRequest(QVariantList lines)
 {
     if (connection.state() == QTcpSocket::ConnectedState && !lines.isEmpty()) {
-        connection.write(QString("*%1\r\n").arg(QString::number(lines.count())).toUtf8());
+        QByteArray commandLine = QString("*%1\r\n").arg(QString::number(lines.count())).toUtf8();
 
         foreach (QVariant line, lines) {
             QString bulkString = line.toString();
 
-            connection.write(QString("$%1\r\n").arg(QString::number(bulkString.length())).toUtf8());
-            connection.write(QString("%1\r\n").arg(bulkString).toUtf8());
+            commandLine.append(QString("$%1\r\n").arg(QString::number(bulkString.length())).toUtf8());
+            commandLine.append(QString("%1\r\n").arg(bulkString).toUtf8());
         }
 
-        connection.flush();
+        connection.write(commandLine);
+        connection.waitForBytesWritten();
+        connection.waitForReadyRead();
+
+        parseReply();
     }
 }
 

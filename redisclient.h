@@ -18,7 +18,6 @@ public:
 
     void connectToServer(QString hostName, quint16 port = 6379);
     void sendCommand(Command *command);
-    void pipelining(QList<Command *> commands);
 
 private:
     QTcpSocket connection;
