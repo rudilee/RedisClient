@@ -62,6 +62,7 @@ Command *Command::EXPIRE(QString key, int seconds)
 {
     Command *command = new Command("EXPIRE");
 
+    command->addArgument(key);
     command->addArgument(seconds);
 
     return command;
