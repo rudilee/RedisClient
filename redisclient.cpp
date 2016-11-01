@@ -13,6 +13,11 @@ void RedisClient::connectToServer(QString hostName, quint16 port)
     connection.connectToHost(hostName, port);
 }
 
+void RedisClient::disconnectFromServer()
+{
+    connection.disconnectFromHost();
+}
+
 void RedisClient::sendCommand(Command *command)
 {
     if (subscribing)

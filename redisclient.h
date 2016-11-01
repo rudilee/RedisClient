@@ -17,6 +17,7 @@ public:
     explicit RedisClient(QObject *parent = 0);
 
     void connectToServer(QString hostName, quint16 port = 6379);
+    void disconnectFromServer();
     void sendCommand(Command *command);
 
 private:
